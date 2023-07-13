@@ -18,12 +18,42 @@ You'll also find some references and some tools for common text editors such as 
 
 ### Usage
 
-Run the following command to check if your code/doc fits the Betty Style (mostly inspired from the Linux Kernel style):
+- Clone the repo to your local machine
+- cd into the Betty directory
+- Install the linter with sudo ./install.sh
+- emacs or vi a new file called betty, and copy the script below:
+
+~~~
+#!/bin/bash
+# Simply a wrapper script to keep you from having to use betty-style
+# and betty-doc separately on every item.
+# Originally by Tim Britton (@wintermanc3r), multiargument added by
+# Larry Madeo (@hillmonkey)
+
+BIN_PATH="/usr/local/bin"
+BETTY_STYLE="betty-style"
+BETTY_DOC="betty-doc"
+
+if [ "$#" = "0" ]; then
+    echo "No arguments passed."
+    exit 1
+fi
+
+for argument in "$@" ; do
+    echo -e "\n========== $argument =========="
+    ${BIN_PATH}/${BETTY_STYLE} "$argument"
+    ${BIN_PATH}/${BETTY_DOC} "$argument"
+done
+~~~
+- Once saved, exit file and change permissions to apply to all users with chmod a+x betty
+- Move the betty file into /bin/ directory or somewhere else in your $PATH with sudo mv betty /bin/
+- Run the following command to check if your code/doc fits the Betty Style (mostly inspired from the Linux Kernel style):
 
 ```ShellSession
-betty-style file1 [file2 [file3 [...]]]
+betty file1 [file2 [file3 [...]]]
 ```
 
 ```ShellSession
 betty-doc file1 [file2 [file3 [...]]]
 ```
+
